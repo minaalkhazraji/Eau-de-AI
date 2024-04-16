@@ -40,7 +40,7 @@ def get_user_preferences():
     #invalid selection handling
     while method not in ['graph', 'hash']:
         print("Method must be either 'graph' or 'hash'. Please try again.")
-        method = input("Select recommendatiom method: 'graph' or 'hash': ")
+        method = input("Select recommendation method: 'graph' or 'hash': ")
     return user_name, notes, price_range, occasions, method
 
 def main():
