@@ -10,7 +10,7 @@ def get_user_preferences():
 
     #scent note selection
     notes_options = ["woody", "floral", "citrus", "spicy", "sweet"]
-    print("\nEnter preferred scent notes:")
+    print("\nSelect preferred scent notes:")
     for i, option in enumerate(notes_options, 1):
         print(f"{i}. {option}")
     notes_selections = input("Select numbers (separated by commas): ")
@@ -19,12 +19,29 @@ def get_user_preferences():
 
     #price range selection
     price_options = ["Under $50", "$50 - $100", "$100 - $150", "$150 - $200", "Above $200"]
-    print("\nEnter your preferred price range:")
+    print("\nSelect your preferred price range:")
     for i, option in enumerate(price_options, 1):
         print(f"{i}. {option}")
     price_selections = input("Select numbers (separated by commas): ")
     selected_prices = [price_options[int(index) - 1] for index in price_selections.split(',') if index.isdigit() and 0 < int(index) <= len(price_options)]
     price_range = ', '.join(selected_prices)
+
+    #occasion selection
+    occasion_options = ["casual", "formal", "evening", "sport"]
+    print("\nSelect the occasion:")
+    for i, option in enumerate(occasion_options, 1):
+        print(f"{i}. {option}")
+    occasion_selections = input("Select numbers (separated by commas): ")
+    selected_occasion  = [occasion_options[int(index) - 1] for index in occasion_selections.split(',') if index.isdigit() and 0 < int(index) <= len(occasion_options)]
+    occasions = ', '.join(selected_occasion)
+
+    #recommendation method selection
+    method = input("Select recommendatiom method: 'graph' or 'hash': ")
+    #invalid selection handling
+    while method not in ['graph', 'hash']:
+        print("Method must be either 'graph' or 'hash'. Please try again.")
+        method = input("Select recommendatiom method: 'graph' or 'hash': ")
+    return user_name, notes, price_range, occasions, method
 
 def main():
     return
