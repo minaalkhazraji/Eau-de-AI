@@ -4,12 +4,12 @@
 #load the dataset here
 
 def get_user_preferences():
-    print("\Welcome to Eau de AI: Perfume Finder")
+    print("Welcome to Eau de AI: Perfume Finder")
     user_name = input("Begin by entering your name: ")
     print(f"Hello, {user_name}! Let's get started!")
 
     #scent note selection
-    notes_options = ["woody", "floral", "citrus", "spicy", "sweet"]
+    notes_options = ["Woody", "Floral", "Citrus", "Spicy", "Sweet"]
     print("\nSelect preferred scent notes:")
     for i, option in enumerate(notes_options, 1):
         print(f"{i}. {option}")
@@ -27,7 +27,7 @@ def get_user_preferences():
     price_range = ', '.join(selected_prices)
 
     #occasion selection
-    occasion_options = ["casual", "formal", "evening", "sport"]
+    occasion_options = ["Casual", "Formal", "Evening", "Sport"]
     print("\nSelect the occasion:")
     for i, option in enumerate(occasion_options, 1):
         print(f"{i}. {option}")
@@ -36,7 +36,7 @@ def get_user_preferences():
     occasions = ', '.join(selected_occasion)
 
     #recommendation method selection
-    method = input("Select recommendatiom method: 'graph' or 'hash': ")
+    method = input("\nSelect recommendation method: 'graph' or 'hash': ")
     #invalid selection handling
     while method not in ['graph', 'hash']:
         print("Method must be either 'graph' or 'hash'. Please try again.")
@@ -44,6 +44,7 @@ def get_user_preferences():
     return user_name, notes, price_range, occasions, method
 
 def main():
-    return
+    get_user_preferences()
 
 if __name__ == "__main__":
+    main()
