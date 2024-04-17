@@ -1,8 +1,6 @@
-#This file manages user interactions
-#Includes collecting preferences, choosing the recommendation method, displaying recommendations, and gathering feedback
-
-#load the dataset here
-
+from perfume import Perfume
+from graph import Graph
+from hash import Hash
 def get_user_preferences():
     print("Welcome to Eau de AI: Perfume Finder")
     user_name = input("Begin by entering your name: ")
@@ -42,6 +40,19 @@ def get_user_preferences():
         print("Method must be either 'graph' or 'hash'. Please try again.")
         method = input("Select recommendation method: 'graph' or 'hash': ")
     return user_name, notes, price_range, occasions, method
+def user_recommendation(perfumes):
+    graph = Graph()
+    hashTable = Hash()
+
+    for perfume in perfumes:
+        graph.add_perfume(perfume)
+        hashTable.add_perfume(perfume)
+
+    #shared notes, implement logic
+
+    return graph, hashTable
+
+
 
 def main():
     get_user_preferences()
