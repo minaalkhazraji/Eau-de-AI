@@ -1,6 +1,7 @@
 from perfume import Perfume
-from graph import Graph
-from hash import Hash
+from recommendation_engine import Hash
+from recommendation_engine import Graph
+
 def get_user_preferences():
     print("Welcome to Eau de AI: Perfume Finder")
     user_name = input("Begin by entering your name: ")
@@ -40,6 +41,7 @@ def get_user_preferences():
         print("Method must be either 'graph' or 'hash'. Please try again.")
         method = input("Select recommendation method: 'graph' or 'hash': ")
     return user_name, notes, price_range, occasions, method
+
 def user_recommendation(perfumes):
     graph = Graph()
     hashTable = Hash()
@@ -55,6 +57,7 @@ def user_recommendation(perfumes):
 
 
 def main():
+    #testing that the menu works
     get_user_preferences()
 
 if __name__ == "__main__":
