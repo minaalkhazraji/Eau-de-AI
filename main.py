@@ -1,6 +1,9 @@
-from perfume import Perfume
+#This file handles logic related to user input, printing recommendations, and loading data
+
+from recommendation_engine import Perfume
 from recommendation_engine import Hash
 from recommendation_engine import Graph
+from recommendation_engine import RecommendationEngine
 
 def get_user_preferences():
     print("Welcome to Eau de AI: Perfume Finder")
@@ -57,8 +60,19 @@ def user_recommendation(perfumes):
 
 
 def main():
-    #testing that the menu works
-    get_user_preferences()
+    #load dataset here, can create a new file that handles loading logic if u want
+
+    #initialize rec engine
+    #something will go in parentheses once we have the dataset loaded in
+    engine = RecommendationEngine()
+
+    #take user preferences
+    notes, price_range, occasions, method = get_user_preferences()
+
+    #get recommendations
+    recommendations = engine.recommend(notes, price_range, occasions, method)
+
+    #display recommendations
 
 if __name__ == "__main__":
     main()

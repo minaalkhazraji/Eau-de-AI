@@ -1,3 +1,6 @@
+#This file handles all logic related to data traversal using our data structures:
+#Graph or Hash
+
 class Perfume:
     def __init__(self, name, notes, price, occasions):
         self.name = name
@@ -19,7 +22,7 @@ class Hash:
                 self.hashtable[note].append(perfume)
 
 class Graph:
-    def __int__(self):
+    def __init__(self):
         self.adjacency_list = {}
 
 
