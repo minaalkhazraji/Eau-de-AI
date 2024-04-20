@@ -64,6 +64,8 @@ def main():
     # installed pip and utilizing pandas to load data from xcsl data set
     file_path = 'perfumeedited2.xlsx'
     perfume_df = pd.read_excel(file_path)
+    #test to see if load and read work for first five rows
+    print(perfume_df.head()) #just to see if file is in the directory and loaded propeorly using pandas #comment this out
 
     #Perfume objects
     perfumes = [Perfume(row['Name'], row['Description'].split(','), row['Price'], row['Occasion'].split(','))
