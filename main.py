@@ -1,9 +1,9 @@
 #This file handles logic related to user input, printing recommendations, and loading data
 
-from recommendation_engine import Perfume
+import pandas as pd
 from recommendation_engine import Hash
 from recommendation_engine import Graph
-from recommendation_engine import RecommendationEngine
+from recommendation_engine import RecommendationEngine, Perfume
 
 def get_user_preferences():
     print("Welcome to Eau de AI: Perfume Finder")
@@ -57,22 +57,29 @@ def user_recommendation(perfumes):
 
     return graph, hashTable
 
-
+# ...
 
 def main():
-    #load dataset here, can create a new file that handles loading logic if u want
+    # load data
+    # installed pip and utilizing pandas to load data from xcsl data set
+    file_path = 'perfumeedited2.xlsx'
+    perfume_df = pd.read_excel(file_path)
 
-    #initialize rec engine
-    #something will go in parentheses once we have the dataset loaded in
-    engine = RecommendationEngine()
+    #Perfume objects
+    perfumes = [Perfume(row['Name'], row['Description'].split(','), row['Price'], row['Occasion'].split(','))
+                for index, row in perfume_df.iterrows()]
 
-    #take user preferences
-    notes, price_range, occasions, method = get_user_preferences()
+    # Initialize recommendation engine
+    engine = RecommendationEngine(perfumes)
 
-    #get recommendations
+    user_name, notes, price_range, occasions, method = get_user_preferences()
+
+    # Get recommendations
     recommendations = engine.recommend(notes, price_range, occasions, method)
 
-    #display recommendations
+    # show the recommendation
+    for perfume in recommendations:
+        print(f"Recommended Perfume: {perfume.name}")
 
 if __name__ == "__main__":
     main()
