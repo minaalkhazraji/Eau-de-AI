@@ -109,8 +109,13 @@ def main():
         #show the recommendations
         if recommendations:
             print("\nIt's a match! Here are the perfumes we found for you:")
+            max_name_length = max(len(perfume.name) for perfume in recommendations)
+            name_col_width = max(max_name_length, len("Perfume Name"))
+            header = f"{'Perfume Name':<{name_col_width}} {'Price':>10}"
+            print(header)
+            print('-' * (name_col_width + 11))
             for perfume in recommendations:
-                print(f"Recommended Perfume and price: {perfume.name}, ${perfume.price}")
+                print(f"{perfume.name:<{name_col_width}} ${perfume.price:>10,.2f}")
         else:
             print("No recommendations could be made based on the selected criteria, sorry!")
 
