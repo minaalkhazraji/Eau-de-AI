@@ -1,7 +1,7 @@
 <H1> EAU de Ai: Perfume Finder </h1>
 
 ## Project Overview
-The Perfume Recommendation System is designed to help users find perfumes that match their personal preferences for scent notes, price range, and occasions. This system utilizes advanced data structures, such as graphs and hash tables, to provide efficient and accurate recommendations based on user input.
+This Perfume Recommendation System is designed to help users find perfumes that match their personal preferences for scent notes, price range, and occasions. This system utilizes advanced data structures, such as graphs and hash tables, to provide efficient and accurate recommendations based on user input.
 
 ## Features
 - **User Preferences Input**: Allows users to specify their preferred scent notes, price range, and occasions as well as their preferred method of recommendation.
