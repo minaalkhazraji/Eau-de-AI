@@ -50,6 +50,7 @@ class RecommendationEngine:
         for perfume in self.perfumes:
             self.hash.add_perfume(perfume)
             self.graph.add_perfume(perfume)
+            self.add_similar_edges(perfume)
 
 
     def add_similar_edges(self, perfume):
@@ -59,13 +60,13 @@ class RecommendationEngine:
             if any(note in existing_perfume.notes for note in perfume.notes):
                 self.graph.add_edge(perfume, existing_perfume)
 
-    def recommend(self, notes, price_range, ocassions, method):
+    def recommend(self, notes, minPrice, maxPrice, ocassions, method):
         if method == 'graph':
-            return self.recommend_graph(notes, price_range, ocassions)
+            return self.recommend_graph(notes, minPrice, maxPrice, ocassions)
         elif method == 'hash':
-            return self.recommend_hash(notes, price_range, ocassions)
+            return self.recommend_hash(notes, minPrice, maxPrice, ocassions)
 
-    def recommend_graph(self, notes, price_range, occasions):
+    def recommend_graph(self, notes, minPrice, maxPrice, occasions):
         from collections import deque
 
         set_of_notes = set(notes.split(', '))
@@ -77,9 +78,9 @@ class RecommendationEngine:
                 initial_matches.extend(self.hash.hash_table[note])
 
         # filtering out based on user pref
-        minPrice, maxPrice = map(float, price_range.split('-'))
+
         initial_matches = [perfume for perfume in initial_matches if
-                           perfume.price >= minPrice and perfume.price <=maxPrice and set_of_occasions.intersection(perfume.occasions)]
+                           minPrice <= perfume.price <= maxPrice and set_of_occasions.intersection(perfume.occasions)]
 
         # bfs through queue
         queue = deque(initial_matches)
@@ -89,30 +90,28 @@ class RecommendationEngine:
         # loop until 10 recommendations are found
         while queue and len(recommended) < 10: # this means there is a limit to 10 reccs
             current = queue.popleft()
-            recommended.append(current)
+            if current not in visited:
+                recommended.append(current)
+                visited.add(current)
 
             for adjacent in self.graph.find_edge(current):
                 if adjacent not in visited:
-                    visited.add(adjacent)
                     queue.append(adjacent)
 
         return recommended
 
-    def recommend_hash(self, notes, price_range, occasions):
+    def recommend_hash(self, notes, minPrice, maxPrice, occasions):
 
         set_of_notes = set(notes.split(', '))
         set_of_occasions = set(occasions.split(', '))
-        perfume_match = []
+        perfume_match = set()
         for note in set_of_notes:
             if note in self.hash.hash_table:
-                perfume_match.extend(self.hash.hash_table[note])
-                minPrice, maxPrice = map(float, price_range.split('-'))
-                # have to work on the price range crap like parising through it, maybe creating a parse priciing?
-                reccommendedList = [
-                    perfume for perfume in perfume_match if
-                    perfume.price >= minPrice and perfume.price <= maxPrice and set_of_occasions.intersection(perfume.occasions)
-                ]
-                return reccommendedList
+                perfume_match.update(self.hash.hash_table[note])
+
+        reccommendedList = [perfume for perfume in perfume_match if
+                   minPrice <= perfume.price <= maxPrice and set_of_occasions.intersection(perfume.occasions)]
+        return reccommendedList if reccommendedList else []
 #have to work on recc graph and recc hash
 # check price range parsing works
 
