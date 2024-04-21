@@ -28,12 +28,17 @@ def get_user_preferences():
 
     #scent note selection
     notes_options = ["Woody", "Floral", "Bergamot", "Vanilla", "Tobacco"]
-    print("\nSelect preferred scent notes:")
-    for i, option in enumerate(notes_options, 1):
-        print(f"{i}. {option}")
-    notes_selections = input("Select numbers (separated by commas): ")
-    selected_notes = [notes_options[int(index) - 1] for index in notes_selections.split(',') if index.isdigit() and 0 < int(index) <= len(notes_options)]
-    notes = ', '.join(selected_notes)
+    notes = ''
+    while not notes:
+        print("\nSelect preferred scent notes:")
+        for i, option in enumerate(notes_options, 1):
+            print(f"{i}. {option}")
+        notes_selections = input("Select numbers (separated by commas): ")
+        selected_notes = [notes_options[int(index) - 1] for index in notes_selections.split(',') if index.isdigit() and 0 < int(index) <= len(notes_options)]
+        if not selected_notes:
+            print("Invalid input. Please select valid numbers corresponding to the scent notes.")
+        else:
+            notes = ', '.join(selected_notes)
 
     #price range selection
     price_options = ["Under $50", "$50 - $100", "$100 - $150", "$150 - $200", "Above $200"]
@@ -45,12 +50,18 @@ def get_user_preferences():
 
     #occasion selection
     occasion_options = ["Daytime", "Nightime","Anytime"]
-    print("\nSelect the occasion:")
-    for i, option in enumerate(occasion_options, 1):
-        print(f"{i}. {option}")
-    occasion_selections = input("Select numbers (separated by commas): ")
-    selected_occasion  = [occasion_options[int(index) - 1] for index in occasion_selections.split(',') if index.isdigit() and 0 < int(index) <= len(occasion_options)]
-    occasions = ', '.join(selected_occasion)
+    occasions = ''
+    while not occasions:
+        print("\nSelect the occasion:")
+        for i, option in enumerate(occasion_options, 1):
+            print(f"{i}. {option}")
+        occasion_selections = input("Select numbers (separated by commas): ")
+        selected_occasion = [occasion_options[int(index) - 1] for index in occasion_selections.split(',') if
+                             index.isdigit() and 0 < int(index) <= len(occasion_options)]
+        if not selected_occasion:
+            print("Invalid input. Please select valid numbers corresponding to the occasions.")
+        else:
+            occasions = ', '.join(selected_occasion)
 
     #recommendation method selection
     method = input("\nSelect recommendation method: graph/hash: ").strip().lower()
@@ -99,7 +110,7 @@ def main():
             for perfume in recommendations:
                 print(f"Recommended Perfume and price: {perfume.name}, ${perfume.price}")
         else:
-            print("No recommendations could be made based on the selected criteria.")
+            print("No recommendations could be made based on the selected criteria, sorry!")
 
         repeat = input("\nWould you like to get another recommendation? (yes/no): ").strip().lower()
         if repeat == 'yes':
