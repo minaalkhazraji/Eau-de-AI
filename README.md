@@ -8,6 +8,7 @@ This Perfume Recommendation System is designed to help users find perfumes that 
 - **Graph-Based Recommendations**: Uses a graph data structure to find perfumes with similar characteristics.
 - **Hash-Based Recommendations**: Employs a hash table for quick lookup of perfumes by scent notes.
 - **Interactive CLI**: Provides a command-line interface for easy interaction with the system.
+- **User Exit Survey**: Gathers information from user regarding satisfaction with the provided recommendations.
 
 ## Technologies Used
 - Python 3.8+
