@@ -74,7 +74,7 @@ def user_recommendation(perfumes):
 def main():
     # load data
     # installed pip and utilizing pandas to load data from xcsl data set
-    file_path = 'perfumeedited2.xlsx'
+    file_path = 'perfumeedited3.xlsx'
     perfume_df = pd.read_excel(file_path)
     #test to see if load and read work for first five rows
     #print(perfume_df.head()) #just to see if file is in the directory and loaded propeorly using pandas #comment this out
