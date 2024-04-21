@@ -22,6 +22,7 @@ def parsePricing(price_selecting):
 
 
 def get_user_preferences():
+    print("Welcome to Eau de AI: Perfume Finder")
     user_name = input("Begin by entering your name: ").title()
     print(f"Hello, {user_name}! Let's get started!")
 
@@ -85,8 +86,6 @@ def user_recommendation(perfumes):
 # ...
 
 def main():
-    print("Welcome to Eau de AI: Perfume Finder")
-
     # load data
     # installed pip and utilizing pandas to load data from xcsl data set
     file_path = 'perfumeedited3.xlsx'
