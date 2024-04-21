@@ -5,27 +5,13 @@ from recommendation_engine import Hash
 from recommendation_engine import Graph
 from recommendation_engine import RecommendationEngine, Perfume
 
-def parsePricing(price_selecting):
-    priceMap = {
-        "1": (0,50),
-        "2": (50, 100),
-        "3": (100, 150),
-        "4": (150, 200),
-        "5": (200, float('inf'))
-    }
-    price_indexes = price_selecting.split(',')
-    minPrice = min(priceMap[index][0] for index in price_indexes if index in priceMap)
-    maxPrice = max(priceMap[index][1] for index in price_indexes if index in priceMap)
-    return minPrice, maxPrice
-
-
 def get_user_preferences():
     print("Welcome to Eau de AI: Perfume Finder")
     user_name = input("Begin by entering your name: ")
     print(f"Hello, {user_name}! Let's get started!")
 
     #scent note selection
-    notes_options = ["Woody", "Floral", "Citrus", "Spicy", "Sweet"]
+    notes_options = ["Woody", "Floral", "Citrus", "Vanilla", "Tobacco"]
     print("\nSelect preferred scent notes:")
     for i, option in enumerate(notes_options, 1):
         print(f"{i}. {option}")
@@ -39,10 +25,11 @@ def get_user_preferences():
     for i, option in enumerate(price_options, 1):
         print(f"{i}. {option}")
     price_selections = input("Select numbers (separated by commas): ")
-    minPrice, maxPrice = parsePricing(price_selections)
+    selected_prices = [price_options[int(index) - 1] for index in price_selections.split(',') if index.isdigit() and 0 < int(index) <= len(price_options)]
+    price_range = ', '.join(selected_prices)
 
     #occasion selection
-    occasion_options = ["Daytime", "Nightime","Anytime"]
+    occasion_options = ["Casual", "Formal", "Evening", "Sport"]
     print("\nSelect the occasion:")
     for i, option in enumerate(occasion_options, 1):
         print(f"{i}. {option}")
@@ -56,7 +43,7 @@ def get_user_preferences():
     while method not in ['graph', 'hash']:
         print("Method must be either 'graph' or 'hash'. Please try again.")
         method = input("Select recommendation method: 'graph' or 'hash': ")
-    return user_name, notes, (minPrice, maxPrice), occasions, method
+    return user_name, notes, price_range, occasions, method
 
 def user_recommendation(perfumes):
     graph = Graph()
@@ -78,24 +65,23 @@ def main():
     file_path = 'perfumeedited2.xlsx'
     perfume_df = pd.read_excel(file_path)
     #test to see if load and read work for first five rows
-    #print(perfume_df.head()) #just to see if file is in the directory and loaded propeorly using pandas #comment this out
+    print(perfume_df.head()) #just to see if file is in the directory and loaded propeorly using pandas #comment this out
 
     #Perfume objects
     perfumes = [Perfume(row['Name'], row['Description'].split(','), row['Price'], row['Occasion'].split(','))
                 for index, row in perfume_df.iterrows()]
+
     # Initialize recommendation engine
     engine = RecommendationEngine(perfumes)
-    user_name, notes, (minPrice, maxPrice) , occasions, method = get_user_preferences()
+
+    user_name, notes, price_range, occasions, method = get_user_preferences()
 
     # Get recommendations
-    recommendations = engine.recommend(notes, minPrice,maxPrice, occasions, method)
+    recommendations = engine.recommend(notes, price_range, occasions, method)
 
     # show the recommendation
-    if recommendations:
-        for perfume in recommendations:
-            print(f"Recommended Perfume: {perfume.name}")
-    else:
-        print("No recommendations could be made based on the selected criteria.")
+    for perfume in recommendations:
+        print(f"Recommended Perfume: {perfume.name}")
 
 if __name__ == "__main__":
     main()
