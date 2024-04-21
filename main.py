@@ -4,7 +4,7 @@ import pandas as pd
 from recommendation_engine import Hash
 from recommendation_engine import Graph
 from recommendation_engine import RecommendationEngine, Perfume
-
+#
 def parsePricing(price_selecting):
     #create map of price ranges
     priceMap = {
@@ -53,11 +53,11 @@ def get_user_preferences():
     occasions = ', '.join(selected_occasion)
 
     #recommendation method selection
-    method = input("\nSelect recommendation method: 'graph' or 'hash': ").strip().lower()
+    method = input("\nSelect recommendation method: 'graph' or 'hash': ")
     #invalid selection handling
     while method not in ['graph', 'hash']:
         print("Method must be either 'graph' or 'hash'. Please try again.")
-        method = input("Select recommendation method: 'graph' or 'hash': ").strip().lower()
+        method = input("Select recommendation method: 'graph' or 'hash': ")
     return user_name, notes, (minPrice, maxPrice), occasions, method
 
 def user_recommendation(perfumes):
@@ -75,31 +75,32 @@ def user_recommendation(perfumes):
 # ...
 
 def main():
-    #load data
-    #installed pip and utilizing pandas to load data from xcsl data set
+    # load data
+    # installed pip and utilizing pandas to load data from xcsl data set
     file_path = 'perfumeedited3.xlsx'
     perfume_df = pd.read_excel(file_path)
     #test to see if load and read work for first five rows
     #print(perfume_df.head()) #just to see if file is in the directory and loaded propeorly using pandas #comment this out
     #print(perfume_df['Price'].head())
 
-    #perfume objects
+    #Perfume objects
     perfumes = [Perfume(row['Name'], row['Notes'], row['Price'], row['Occasion'].split(','))
                 for index, row in perfume_df.iterrows()]
-    #initialize recommendation engine
+
+    # Initialize recommendation engine
     engine = RecommendationEngine(perfumes)
 
-    while True:
-        user_name, notes, (minPrice, maxPrice) , occasions, method = get_user_preferences()
-        #get recommendations
-        recommendations = engine.recommend(notes, minPrice,maxPrice, occasions, method)
+    user_name, notes, (minPrice, maxPrice) , occasions, method = get_user_preferences()
 
-        #show the recommendations
-        if recommendations:
-            for perfume in recommendations:
-                print(f"Recommended Perfume: {perfume.name}")
-        else:
-            print("No recommendations could be made based on the selected criteria.")
+    # Get recommendations
+    recommendations = engine.recommend(notes, minPrice,maxPrice, occasions, method)
+
+    # show the recommendation
+    if recommendations:
+        for perfume in recommendations:
+            print(f"Recommended Perfume and price: {perfume.name}, ${perfume.price}")
+    else:
+        print("No recommendations could be made based on the selected criteria.")
 
 
 if __name__ == "__main__":
