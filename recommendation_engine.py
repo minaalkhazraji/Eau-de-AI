@@ -27,7 +27,6 @@ class Graph:
     def __init__(self):
         self.adjacency_list = {}
 
-
     def add_perfume(self, perfume):
         if perfume not in self.adjacency_list:
             self.adjacency_list[perfume] = []
@@ -108,16 +107,16 @@ class RecommendationEngine:
 
         return recommended #list of reccs
     def recommend_hash(self, notes, minPrice, maxPrice, occasions):
-# put the notes and occasions in their own sets and separate  by commas
+        # put the notes and occasions in their own sets and separate  by commas
         set_of_notes = set(notes.split(', '))
         set_of_occasions = set(occasions.split(', '))
-#store the perfumes
+        #store the perfumes
         perfume_match = set()
         for note in set_of_notes:
             if note in self.hash.hash_table:
                 #if note exists, add the perfume to the match set
                 perfume_match.update(self.hash.hash_table[note])
-# match based on user criteria of price and occasion
+        #match based on user criteria of price and occasion
         reccommendedList = [perfume for perfume in perfume_match if
                    minPrice <= perfume.price <= maxPrice and set_of_occasions.intersection(perfume.occasions)]
 
