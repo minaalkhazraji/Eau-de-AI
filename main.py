@@ -111,7 +111,7 @@ def main():
             print("\nIt's a match! Here are the perfumes we found for you:")
             max_name_length = max(len(perfume.name) for perfume in recommendations)
             name_col_width = max(max_name_length, len("Perfume Name"))
-            header = f"{'Perfume Name':<{name_col_width}} {'Price':>5m}"
+            header = f"{'Perfume Name':<{name_col_width}} {'Price':>5}"
             print(header)
             print('-' * (name_col_width + 11))
             for perfume in recommendations:
