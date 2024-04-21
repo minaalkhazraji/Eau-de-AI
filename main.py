@@ -125,8 +125,18 @@ def main():
         elif repeat == 'no':
             print("\nThank you for using Eau de AI. Please take a moment to fill out our survey.")
             satisfaction = input("How satisfied are you with the recommendations? (1-5): ")
-            print(f"\nYou rated us a {satisfaction}. Thank you for your feedback, bye!")
-            break
+            print(f"You rated us a {satisfaction}, thank you for the feedback!")
+            usage = input("\nDid you use both of our recommendation methods (graph/hash)? Enter yes/no: ").strip().lower()
+            if usage == 'yes':
+                preference = input("\nWhich did you prefer? Enter graph/hash/neither: ").strip().lower()
+                print(f"Thank you for your feedback, {user_name}, bye!")
+                break
+            elif usage == 'no':
+                print(f"\nThank you for your feedback, {user_name}, bye!")
+                break
+            else:
+                print("Invalid input. Exiting...")
+                break
         else:
             print("Invalid input. Exiting...")
             break
