@@ -29,7 +29,7 @@ def get_user_preferences():
     price_range = ', '.join(selected_prices)
 
     #occasion selection
-    occasion_options = ["Daytime", "Nightime","Anytime"]
+    occasion_options = ["Casual", "Formal", "Evening", "Sport"]
     print("\nSelect the occasion:")
     for i, option in enumerate(occasion_options, 1):
         print(f"{i}. {option}")
