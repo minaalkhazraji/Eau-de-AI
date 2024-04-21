@@ -98,7 +98,7 @@ def main():
     # show the recommendation
     if recommendations:
         for perfume in recommendations:
-            print(f"Recommended Perfume: {perfume.name}")
+            print(f"Recommended Perfume and price: {perfume.name}, ${perfume.price}")
     else:
         print("No recommendations could be made based on the selected criteria.")
 
