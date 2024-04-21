@@ -5,9 +5,11 @@ class Perfume:
     def __init__(self, name, notes, price, occasions):
         self.name = name
         self.notes = set(notes.split(',')) if isinstance(notes, str) else set() #create a set of a bunch of notes
-        self.price = price
+        self.price = int(price)
         self.occasions = set(occasions)
 
+    def __repr__(self):
+        return f"Perfume(name={self.name}, price={self.price}, occasions={self.occasions})"
 class Hash:
 
     def __init__(self):
@@ -71,7 +73,6 @@ class RecommendationEngine:
 
         set_of_notes = set(notes.split(', '))
         set_of_occasions = set(occasions.split(', '))
-        print(f"User selected notes: {set_of_notes}")
 
         initial_matches = []
         for note in set_of_notes:
@@ -79,11 +80,11 @@ class RecommendationEngine:
                 initial_matches.extend(self.hash.hash_table[note])
 
         # filtering out based on user pref
-        #print(f"Initial matches before price and occasion filtering: {initial_matches}")
+        #DELETE print(f"Initial matches before price and occasion filtering: {initial_matches}")
 
         initial_matches = [perfume for perfume in initial_matches if
                            minPrice <= perfume.price <= maxPrice and set_of_occasions.intersection(perfume.occasions)]
-        #print(f"Matches after filtering: {initial_matches}")
+        #DELETEEEE print(f"Matches after filtering: {initial_matches}")
 
         # bfs through queue
         queue = deque(initial_matches)
@@ -91,18 +92,24 @@ class RecommendationEngine:
         recommended = []
 
         # loop until 10 recommendations are found
-        while queue and len(recommended) < 10: # this means there is a limit to 10 reccs
+        while queue:
             current = queue.popleft()
-            if current not in visited:
-                recommended.append(current)
-                visited.add(current)
 
+            # Check if current perfume meets criteria and add to recommended if it does.
+            if minPrice <= current.price <= maxPrice and set_of_occasions.intersection(current.occasions):
+                if current not in recommended:
+                    recommended.append(current)
+                    if len(recommended) >= 10:  # Stop collecting once we have 10 recommendations.
+                        break
+
+            # Explore adjacent perfumes, ensuring they haven't been visited.
             for adjacent in self.graph.find_edge(current):
-                if adjacent not in visited:
+                if adjacent not in visited and minPrice <= adjacent.price <= maxPrice and set_of_occasions.intersection(
+                        adjacent.occasions):
                     queue.append(adjacent)
+                    visited.add(adjacent)
 
         return recommended
-
     def recommend_hash(self, notes, minPrice, maxPrice, occasions):
 
         set_of_notes = set(notes.split(', '))
@@ -111,9 +118,9 @@ class RecommendationEngine:
         for note in set_of_notes:
             if note in self.hash.hash_table:
                 perfume_match.update(self.hash.hash_table[note])
-        #print(f"Available notes in hash table: {self.hash.hash_table.keys()}")
+        #DELETE print(f"Available notes in hash table: {self.hash.hash_table.keys()}")
 
-        #print(f"Perfumes matched by notes: {perfume_match}")
+        #DELETE print(f"Perfumes matched by notes: {perfume_match}")
 
         reccommendedList = [perfume for perfume in perfume_match if
                    minPrice <= perfume.price <= maxPrice and set_of_occasions.intersection(perfume.occasions)]

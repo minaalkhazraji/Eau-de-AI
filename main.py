@@ -78,7 +78,7 @@ def main():
     perfume_df = pd.read_excel(file_path)
     #test to see if load and read work for first five rows
     #print(perfume_df.head()) #just to see if file is in the directory and loaded propeorly using pandas #comment this out
-    print(perfume_df['Price'].head())
+    #print(perfume_df['Price'].head())
 
     #Perfume objects
     perfumes = [Perfume(row['Name'], row['Notes'], row['Price'], row['Occasion'].split(','))
