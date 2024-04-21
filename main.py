@@ -22,7 +22,7 @@ def parsePricing(price_selecting):
 
 
 def get_user_preferences():
-    user_name = input("Begin by entering your name: ")
+    user_name = input("Begin by entering your name: ").title()
     print(f"Hello, {user_name}! Let's get started!")
 
     #scent note selection
@@ -111,11 +111,11 @@ def main():
             print("\nIt's a match! Here are the perfumes we found for you:")
             max_name_length = max(len(perfume.name) for perfume in recommendations)
             name_col_width = max(max_name_length, len("Perfume Name"))
-            header = f"{'Perfume Name':<{name_col_width}} {'Price':>10}"
+            header = f"{'Perfume Name':<{name_col_width}} {'Price':>5m}"
             print(header)
             print('-' * (name_col_width + 11))
             for perfume in recommendations:
-                print(f"{perfume.name:<{name_col_width}} ${perfume.price:>10,.2f}")
+                print(f"{perfume.name:<{name_col_width}} ${perfume.price:>.2f}")
         else:
             print("No recommendations could be made based on the selected criteria, sorry!")
 
