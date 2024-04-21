@@ -53,11 +53,11 @@ def get_user_preferences():
     occasions = ', '.join(selected_occasion)
 
     #recommendation method selection
-    method = input("\nSelect recommendation method: 'graph' or 'hash': ")
+    method = input("\nSelect recommendation method: 'graph' or 'hash': ").strip().lower()
     #invalid selection handling
     while method not in ['graph', 'hash']:
         print("Method must be either 'graph' or 'hash'. Please try again.")
-        method = input("Select recommendation method: 'graph' or 'hash': ")
+        method = input("Select recommendation method: 'graph' or 'hash': ").strip().lower()
     return user_name, notes, (minPrice, maxPrice), occasions, method
 
 def user_recommendation(perfumes):
@@ -83,24 +83,23 @@ def main():
     #print(perfume_df.head()) #just to see if file is in the directory and loaded propeorly using pandas #comment this out
     #print(perfume_df['Price'].head())
 
-    #Perfume objects
+    #perfume objects
     perfumes = [Perfume(row['Name'], row['Notes'], row['Price'], row['Occasion'].split(','))
                 for index, row in perfume_df.iterrows()]
-
-    # Initialize recommendation engine
+    #initialize recommendation engine
     engine = RecommendationEngine(perfumes)
 
-    user_name, notes, (minPrice, maxPrice) , occasions, method = get_user_preferences()
+    while True:
+        user_name, notes, (minPrice, maxPrice) , occasions, method = get_user_preferences()
+        #get recommendations
+        recommendations = engine.recommend(notes, minPrice,maxPrice, occasions, method)
 
-    # Get recommendations
-    recommendations = engine.recommend(notes, minPrice,maxPrice, occasions, method)
-
-    # show the recommendation
-    if recommendations:
-        for perfume in recommendations:
-            print(f"Recommended Perfume and price: {perfume.name}, ${perfume.price}")
-    else:
-        print("No recommendations could be made based on the selected criteria.")
+        #show the recommendations
+        if recommendations:
+            for perfume in recommendations:
+                print(f"Recommended Perfume and price: {perfume.name}, ${perfume.price}")
+        else:
+            print("No recommendations could be made based on the selected criteria.")
 
 
 if __name__ == "__main__":

@@ -61,7 +61,7 @@ class RecommendationEngine:
             if any(note in existing_perfume.notes for note in perfume.notes):
                 self.graph.add_edge(perfume, existing_perfume)
 
-# start reccomendation process based on user input of "graph" method or "hash" method
+    #start reccomendation process based on user input of "graph" method or "hash" method
     def recommend(self, notes, minPrice, maxPrice, ocassions, method):
         if method == 'graph':
             return self.recommend_graph(notes, minPrice, maxPrice, ocassions)
