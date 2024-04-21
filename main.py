@@ -4,7 +4,9 @@ import pandas as pd
 from recommendation_engine import Hash
 from recommendation_engine import Graph
 from recommendation_engine import RecommendationEngine, Perfume
+#
 def parsePricing(price_selecting):
+    #create map of price ranges
     priceMap = {
         "1": (0,50),
         "2": (50, 100),
@@ -13,6 +15,7 @@ def parsePricing(price_selecting):
         "5": (200, float('inf'))
     }
     price_indexes = price_selecting.split(',')
+    #marks the first value of the tuple as the minimum price and the second value of the tuple the max price
     minPrice = min(priceMap[index][0] for index in price_indexes if index in priceMap)
     maxPrice = max(priceMap[index][1] for index in price_indexes if index in priceMap)
     return minPrice, maxPrice

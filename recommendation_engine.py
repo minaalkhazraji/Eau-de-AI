@@ -62,6 +62,7 @@ class RecommendationEngine:
             if any(note in existing_perfume.notes for note in perfume.notes):
                 self.graph.add_edge(perfume, existing_perfume)
 
+# start reccomendation process based on user input of "graph" method or "hash" method
     def recommend(self, notes, minPrice, maxPrice, ocassions, method):
         if method == 'graph':
             return self.recommend_graph(notes, minPrice, maxPrice, ocassions)
@@ -70,7 +71,7 @@ class RecommendationEngine:
 
     def recommend_graph(self, notes, minPrice, maxPrice, occasions):
         from collections import deque
-
+        # put the notes and occasions in their own sets and separate  by commas
         set_of_notes = set(notes.split(', '))
         set_of_occasions = set(occasions.split(', '))
 
@@ -80,57 +81,46 @@ class RecommendationEngine:
                 initial_matches.extend(self.hash.hash_table[note])
 
         # filtering out based on user pref
-        #DELETE print(f"Initial matches before price and occasion filtering: {initial_matches}")
 
         initial_matches = [perfume for perfume in initial_matches if
                            minPrice <= perfume.price <= maxPrice and set_of_occasions.intersection(perfume.occasions)]
-        #DELETEEEE print(f"Matches after filtering: {initial_matches}")
-
         # bfs through queue
         queue = deque(initial_matches)
-        visited = set(initial_matches)
+        visited = set(initial_matches)#this set makes sure all the visited matches are in one set, so we avoid revisiting
         recommended = []
 
-        # loop until 10 recommendations are found
         while queue:
             current = queue.popleft()
 
-            # Check if current perfume meets criteria and add to recommended if it does.
+            # Check if current perfume meets user preferences and add to recommended if it does.
             if minPrice <= current.price <= maxPrice and set_of_occasions.intersection(current.occasions):
                 if current not in recommended:
                     recommended.append(current)
                     if len(recommended) >= 10:  # Stop collecting once we have 10 recommendations.
                         break
 
-            # Explore adjacent perfumes, ensuring they haven't been visited.
+            # Explore adjacent perfumes
             for adjacent in self.graph.find_edge(current):
                 if adjacent not in visited and minPrice <= adjacent.price <= maxPrice and set_of_occasions.intersection(
                         adjacent.occasions):
-                    queue.append(adjacent)
-                    visited.add(adjacent)
+                    queue.append(adjacent)#adds the fragrance to the queue
+                    visited.add(adjacent)# marks it as visited and it gets added to the visited set
 
-        return recommended
+        return recommended #list of reccs
     def recommend_hash(self, notes, minPrice, maxPrice, occasions):
-
+# put the notes and occasions in their own sets and separate  by commas
         set_of_notes = set(notes.split(', '))
         set_of_occasions = set(occasions.split(', '))
+#store the perfumes
         perfume_match = set()
         for note in set_of_notes:
             if note in self.hash.hash_table:
+                #if note exists, add the perfume to the match set
                 perfume_match.update(self.hash.hash_table[note])
-        #DELETE print(f"Available notes in hash table: {self.hash.hash_table.keys()}")
-
-        #DELETE print(f"Perfumes matched by notes: {perfume_match}")
-
+# match based on user criteria of price and occasion
         reccommendedList = [perfume for perfume in perfume_match if
                    minPrice <= perfume.price <= maxPrice and set_of_occasions.intersection(perfume.occasions)]
 
         return reccommendedList if reccommendedList else []
 
-        #testing to see if file is being read correctly DELETE LATER
-        #for note, perfumes in self.hash.hash_table.items():
-           # print(f"Note: {note} ")
-            #print(f"Perfumes: {[perfume.name for perfume in perfumes]}")
-#have to work on recc graph and recc hash
-# check price range parsing works
 
