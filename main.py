@@ -107,8 +107,9 @@ def main():
 
         #show the recommendations
         if recommendations:
+            print("\nIt's a match! Here are the perfumes we found for you:")
             for perfume in recommendations:
-                print(f"Recommended Perfume and price: {perfume.name}, ${perfume.price}")
+                print(f"\nRecommended Perfume and price: {perfume.name}, ${perfume.price}")
         else:
             print("No recommendations could be made based on the selected criteria, sorry!")
 
@@ -118,7 +119,7 @@ def main():
         elif repeat == 'no':
             print("\nThank you for using Eau de AI. Please take a moment to fill out our survey.")
             satisfaction = input("How satisfied are you with the recommendations? (1-5): ")
-            print(f"Thank you for your feedback! You rated us a {satisfaction}.")
+            print(f"\nThank you for your feedback! You rated us a {satisfaction}.")
             break
         else:
             print("Invalid input. Exiting...")
