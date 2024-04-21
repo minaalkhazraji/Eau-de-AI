@@ -22,7 +22,6 @@ def parsePricing(price_selecting):
 
 
 def get_user_preferences():
-    print("Welcome to Eau de AI: Perfume Finder")
     user_name = input("Begin by entering your name: ")
     print(f"Hello, {user_name}! Let's get started!")
 
@@ -86,6 +85,8 @@ def user_recommendation(perfumes):
 # ...
 
 def main():
+    print("Welcome to Eau de AI: Perfume Finder")
+
     # load data
     # installed pip and utilizing pandas to load data from xcsl data set
     file_path = 'perfumeedited3.xlsx'
@@ -109,17 +110,17 @@ def main():
         if recommendations:
             print("\nIt's a match! Here are the perfumes we found for you:")
             for perfume in recommendations:
-                print(f"\nRecommended Perfume and price: {perfume.name}, ${perfume.price}")
+                print(f"Recommended Perfume and price: {perfume.name}, ${perfume.price}")
         else:
             print("No recommendations could be made based on the selected criteria, sorry!")
 
-        repeat = input("\nWould you like to get another recommendation? (yes/no): ").strip().lower()
+        repeat = input("\nWould you like to use our perfume finder again? (yes/no): ").strip().lower()
         if repeat == 'yes':
             continue
         elif repeat == 'no':
             print("\nThank you for using Eau de AI. Please take a moment to fill out our survey.")
             satisfaction = input("How satisfied are you with the recommendations? (1-5): ")
-            print(f"\nThank you for your feedback! You rated us a {satisfaction}.")
+            print(f"\nYou rated us a {satisfaction}. Thank you for your feedback, bye!")
             break
         else:
             print("Invalid input. Exiting...")
