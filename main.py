@@ -53,11 +53,11 @@ def get_user_preferences():
     occasions = ', '.join(selected_occasion)
 
     #recommendation method selection
-    method = input("\nSelect recommendation method: 'graph' or 'hash': ").strip().lower()
+    method = input("\nSelect recommendation method: graph/hash: ").strip().lower()
     #invalid selection handling
     while method not in ['graph', 'hash']:
         print("Method must be either 'graph' or 'hash'. Please try again.")
-        method = input("Select recommendation method: 'graph' or 'hash': ").strip().lower()
+        method = input("Select recommendation method: graph/hash: ").strip().lower()
     return user_name, notes, (minPrice, maxPrice), occasions, method
 
 def user_recommendation(perfumes):
@@ -101,6 +101,17 @@ def main():
         else:
             print("No recommendations could be made based on the selected criteria.")
 
+        repeat = input("\nWould you like to get another recommendation? (yes/no): ").strip().lower()
+        if repeat == 'yes':
+            continue
+        elif repeat == 'no':
+            print("\nThank you for using Eau de AI. Please take a moment to fill out our survey.")
+            satisfaction = input("How satisfied are you with the recommendations? (1-5): ")
+            print(f"Thank you for your feedback! You rated us a {satisfaction}.")
+            break
+        else:
+            print("Invalid input. Exiting...")
+            break
 
 if __name__ == "__main__":
     main()
