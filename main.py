@@ -26,7 +26,7 @@ def parsePricing(price_selecting, price_options):
 
 
 def get_user_preferences():
-    print("Welcome to Eau de AI: Perfume Finder")
+    print("\nWelcome to Eau de AI: Perfume Finder")
     user_name = input("Begin by entering your name: ").title()
     print(f"Hello, {user_name}! Let's get started!")
 
