@@ -120,6 +120,6 @@ class RecommendationEngine:
         reccommendedList = [perfume for perfume in perfume_match if
                    minPrice <= perfume.price <= maxPrice and set_of_occasions.intersection(perfume.occasions)]
 
-        return reccommendedList if reccommendedList else []
+        return reccommendedList[:10] if reccommendedList else []
 
 
