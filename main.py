@@ -5,7 +5,7 @@ from recommendation_engine import Hash
 from recommendation_engine import Graph
 from recommendation_engine import RecommendationEngine, Perfume
 #
-def parsePricing(price_selecting):
+def parsePricing(price_selecting, price_options):
     #create map of price ranges
     priceMap = {
         "1": (0,50),
@@ -15,9 +15,13 @@ def parsePricing(price_selecting):
         "5": (200, float('inf'))
     }
     price_indexes = price_selecting.split(',')
+    #validate the selected indexes
+    valid_indexes = [index for index in price_indexes if index.isdigit() and index in priceMap]
+    if not valid_indexes:
+        return None, None  #return None or an appropriate value if the input is invalid
     #marks the first value of the tuple as the minimum price and the second value of the tuple the max price
-    minPrice = min(priceMap[index][0] for index in price_indexes if index in priceMap)
-    maxPrice = max(priceMap[index][1] for index in price_indexes if index in priceMap)
+    minPrice = min(priceMap[index][0] for index in valid_indexes)
+    maxPrice = max(priceMap[index][1] for index in valid_indexes)
     return minPrice, maxPrice
 
 
@@ -46,7 +50,15 @@ def get_user_preferences():
     for i, option in enumerate(price_options, 1):
         print(f"{i}. {option}")
     price_selections = input("Select numbers (separated by commas): ")
-    minPrice, maxPrice = parsePricing(price_selections)
+    minPrice, maxPrice = parsePricing(price_selections, price_options)
+    #handling for invalid price selection
+    while minPrice is None and maxPrice is None:
+        print("Invalid input. Please select valid numbers corresponding to the price range.")
+        print("\nSelect your preferred price range:")
+        for i, option in enumerate(price_options, 1):
+            print(f"{i}. {option}")
+        price_selections = input("Select numbers (separated by commas): ")
+        minPrice, maxPrice = parsePricing(price_selections, price_options)
 
     #occasion selection
     occasion_options = ["Daytime", "Nightime","Anytime"]
@@ -90,9 +102,6 @@ def main():
     # installed pip and utilizing pandas to load data from xcsl data set
     file_path = 'perfumeedited3.xlsx'
     perfume_df = pd.read_excel(file_path)
-    #test to see if load and read work for first five rows
-    #print(perfume_df.head()) #just to see if file is in the directory and loaded propeorly using pandas #comment this out
-    #print(perfume_df['Price'].head())
 
     #perfume objects
     perfumes = [Perfume(row['Name'], row['Notes'], row['Price'], row['Occasion'].split(','))
