@@ -95,11 +95,9 @@ def user_recommendation(perfumes):
 
     return graph, hashTable
 
-# ...
-
 def main():
-    # load data
-    # installed pip and utilizing pandas to load data from xcsl data set
+    #load data
+    #installed pip and utilizing pandas to load data from xcsl data set
     file_path = 'perfumeedited3.xlsx'
     perfume_df = pd.read_excel(file_path)
 
